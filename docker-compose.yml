@@ -1,15 +1,16 @@
 services:
   nginx:
-    image: nginx:alpine3.18
+    build: .
     container_name: nginx
     env_file: ${DPSRV_HOME}/rc/secrets/nginx/nginx.env
     ports:
-      - "80:80"
-      - "443:443"
+      - "50080:80"
+      - "50443:443"
     volumes:
-      - ${DPSRV_HOME}/rc/secrets/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ${DPSRV_HOME}/rc/secrets/nginx/conf.d/:/etc/nginx/conf.d/
-      - ${DPSRV_HOME}/var/www/:/usr/share/nginx/html/
+      - ${DPSRV_HOME}/rc/secrets/nginx/nginx.conf:/etc/nginx/nginx.conf.init:ro
+      - ${DPSRV_HOME}/rc/secrets/nginx/conf.d/:/etc/nginx/conf.init/:ro
+      - ${DPSRV_HOME}/rc/secrets/letsencrypt/:/etc/letsencrypt/:ro
+      - ${DPSRV_HOME}/var/www/:/usr/share/nginx/html/:ro
       - ${DPSRV_HOME}/var/log/nginx/:/var/log/nginx/
       - /etc/localtime:/etc/localtime:ro
-    restart: always
+    restart: unless-stopped
