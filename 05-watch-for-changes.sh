@@ -13,13 +13,12 @@ else
 	sleep=60
 fi
 
-
 while true; do
 	sleep $sleep
 
 	change=$(stat -c %y /etc/letsencrypt/live/domain/fullchain.pem || true)
 
-	if [ "$change" != "$lastChange" ]; then
+	if [ "$change" = "$lastChange" ]; then
 		continue
 	fi
 
