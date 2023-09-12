@@ -6,8 +6,7 @@ cp /etc/nginx/conf.init/* /etc/nginx/conf.d/
 
 lastChange=$(stat -c %y /etc/letsencrypt/live/domain/fullchain.pem || true)
 if [ -n "$lastChange" ]; then
-	mv /etc/nginx/conf.d/certbot.conf /etc/nginx/conf.d/certbot.conf.disabled
-	mv /etc/nginx/conf.d/default.conf.disabled /etc/nginx/conf.d/default.conf
+	mv /etc/nginx/conf.d/https.conf.disabled /etc/nginx/conf.d/https.conf
 	sleep=86400
 else
 	sleep=60
@@ -22,9 +21,8 @@ while true; do
 		continue
 	fi
 
-	if [ -f /etc/nginx/conf.d/certbot.conf ]; then
-		mv /etc/nginx/conf.d/certbot.conf /etc/nginx/conf.d/certbot.conf.disabled
-		mv /etc/nginx/conf.d/default.conf.disabled /etc/nginx/conf.d/default.conf
+	if [ -f /etc/nginx/conf.d/https.conf.disabled ]; then
+		mv /etc/nginx/conf.d/https.conf.disabled /etc/nginx/conf.d/https.conf
 		sleep=86400
 	fi
 
