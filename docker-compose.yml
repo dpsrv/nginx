@@ -15,3 +15,7 @@ services:
       - ${DPSRV_HOME}/var/log/nginx/:/var/log/nginx/
       - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
+networks:
+  default:
+    name: dpsrv
+    external: true
