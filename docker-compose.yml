@@ -2,7 +2,7 @@ services:
   nginx:
     build: .
     image: dpsrv/nginx
-    container_name: nginx
+    container_name: dpsrv-nginx
     env_file: ${DPSRV_HOME}/rc/secrets/nginx/nginx.env
     ports:
       - "50080:80"
