@@ -3,7 +3,9 @@ services:
     build: .
     image: dpsrv/nginx
     container_name: dpsrv-nginx
-    env_file: ${DPSRV_HOME}/rc/secrets/nginx/nginx.env
+    env_file:
+      - ${DPSRV_HOME}/rc/secrets/nginx/nginx.env
+      - ${DPSRV_HOME}/local.env
     ports:
       - "50080:80"
       - "50443:443"
