@@ -1,5 +1,5 @@
 services:
-  nginx:
+  dpsrv-nginx:
     build: .
     image: dpsrv/nginx
     container_name: dpsrv-nginx
