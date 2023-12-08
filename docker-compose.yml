@@ -16,6 +16,7 @@ services:
       - ${DPSRV_HOME}/srv/www/:/usr/share/nginx/html/:ro
       - ${DPSRV_HOME}/var/log/nginx/:/var/log/nginx/
       - /etc/localtime:/etc/localtime:ro
+    command: ['nginx', '-g', 'daemon off;']
     restart: unless-stopped
 networks:
   default:
