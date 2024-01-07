@@ -5,7 +5,7 @@ services:
     container_name: dpsrv-nginx
     env_file:
       - ${DPSRV_HOME}/rc/secrets/nginx/nginx.env
-      - ${DPSRV_HOME}/local.env
+      - ${DPSRV_HOME}/rc/secrets/local/${HOSTNAME}/local.env
     ports:
       - "50080:80"
       - "50443:443"
