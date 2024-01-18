@@ -1,8 +1,8 @@
 services:
   dpsrv-nginx:
+    container_name: dpsrv-nginx-${tag:-latest}
+    image: dpsrv/nginx:${tag:-latest}
     build: .
-    image: dpsrv/nginx
-    container_name: dpsrv-nginx
     env_file:
       - ${DPSRV_HOME}/rc/secrets/nginx/nginx.env
       - ${DPSRV_HOME}/rc/secrets/local/${HOSTNAME}/local.env
