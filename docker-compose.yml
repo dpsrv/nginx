@@ -3,6 +3,7 @@ services:
     container_name: dpsrv-nginx-${tag:-latest}
     image: dpsrv/nginx:${tag:-latest}
     build: .
+    hostname: $HOSTNAME.dpsrv.me
     env_file:
       - ${DPSRV_HOME}/rc/secrets/nginx/nginx.env
       - ${DPSRV_HOME}/rc/secrets/local/${HOSTNAME}/local.env
