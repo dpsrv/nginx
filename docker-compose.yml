@@ -6,7 +6,7 @@ services:
     hostname: $HOSTNAME.dpsrv.me
     env_file:
       - ${DPSRV_HOME}/rc/secrets/nginx/nginx.env
-      - ${DPSRV_HOME}/rc/secrets/local/${HOSTNAME}/local.env
+      - ${DPSRV_HOME}/rc/secrets/local/${HOSTNAME}/${HOSTNAME}.env
     ports:
       - "80"
       - "443"
