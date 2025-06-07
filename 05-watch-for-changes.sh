@@ -24,6 +24,8 @@ while true; do
 		continue
 	fi
 
+	cp -r /etc/nginx/conf.init/* /etc/nginx/conf.d/
+
 	if ls /etc/nginx/conf.d/*.conf.ssl; then
 		for file in /etc/nginx/conf.d/*.conf.ssl; do
 			mv $file ${file%.ssl}
