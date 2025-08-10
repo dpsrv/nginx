@@ -5,12 +5,23 @@ ls -la /etc/nginx/ >&2
 rm -f /etc/nginx/conf.d/* || true
 cp -r /etc/nginx/conf.init/* /etc/nginx/conf.d/
 
-lastChange=$(stat -c %y /etc/letsencrypt/live/domain/fullchain.pem || true)
-if [ -n "$lastChange" ]; then
-	for file in /etc/nginx/conf.init/*.conf.ssl; do
-		mv $file ${file%.ssl}
-	done
+function getLastChange() {
+	find /etc/letsencrypt/live/domain/fullchain.pem /etc/nginx/conf.init/ -type f -exec stat -c %Y {} \;|sort|tail -1 || true
+}
+
+function updateConfigs() {
+	cp -r /etc/nginx/conf.init/* /etc/nginx/conf.d/
+	if ls /etc/nginx/conf.d/*.conf.ssl; then
+		for file in /etc/nginx/conf.d/*.conf.ssl; do
+			mv $file ${file%.ssl}
+		done
+	fi
 	sleep=86400
+}
+
+lastChange=$(getLastChange)
+if [ -n "$lastChange" ]; then
+	updateConfigs
 else
 	sleep=60
 fi
@@ -18,20 +29,13 @@ fi
 while true; do
 	sleep $sleep
 
-	change=$(stat -c %y /etc/letsencrypt/live/domain/fullchain.pem || true)
+	change=$(getLastChange)
 
 	if [ "$change" = "$lastChange" ]; then
 		continue
 	fi
 
-	cp -r /etc/nginx/conf.init/* /etc/nginx/conf.d/
-
-	if ls /etc/nginx/conf.d/*.conf.ssl; then
-		for file in /etc/nginx/conf.d/*.conf.ssl; do
-			mv $file ${file%.ssl}
-		done
-		sleep=86400
-	fi
+	updateConfigs
 
 	lastChange=$change
 
